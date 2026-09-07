@@ -1,0 +1,56 @@
+name: Restore current U DINK STORE source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/restore-current-master.yml'
+      - 'archive/**'
+      - 'tools/restore_source.py'
+      - 'tools/promote_current_master.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore-current-master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore archived source
+        run: python tools/restore_source.py
+
+      - name: Promote V4 current master to repository root
+        run: python tools/promote_current_master.py
+
+      - name: Verify runnable source exists
+        run: |
+          test -f index.html
+          echo "Root source restored successfully"
+          find . -maxdepth 2 -type f \
+            ! -path './.git/*' \
+            ! -path './archive/*' \
+            ! -path './restored-source/*' \
+            | sort | head -200
+
+      - name: Remove temporary restored artifacts
+        run: |
+          rm -rf restored-source
+          rm -f U_DINK_STORE_ALL_SOURCE.zip
+
+      - name: Commit restored source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No source changes to commit"
+            exit 0
+          fi
+          git commit -m "Restore V4 current master source to repository root [skip ci]"
+          git push origin HEAD:main
