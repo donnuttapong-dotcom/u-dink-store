@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>U DINK STORE — Play. Wear. Dink.</title>
+<meta name="theme-color" content="#050505" />
+<style>
+:root{
+  --bg:#050505; --bg2:#0b0c0c; --card:#111313; --line:#252828;
+  --text:#f5f5f2; --muted:#9da19d; --lime:#d7ff00; --lime2:#bff000;
+  --max:1440px; --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);letter-spacing:.01em}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+.announce{height:34px;background:var(--lime);color:#050505;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.header{position:sticky;top:0;z-index:30;background:rgba(5,5,5,.90);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{max-width:var(--max);margin:auto;height:76px;padding:0 28px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:32px}
+.logo{display:flex;align-items:center;gap:12px;min-width:220px}
+.logo-mark{width:44px;height:44px;position:relative;border:8px solid #fff;border-top:0;border-radius:0 0 23px 23px}
+.logo-ball{width:25px;height:25px;border-radius:50%;background:var(--lime);position:absolute;left:50%;top:17px;transform:translate(-50%,-50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.logo-ball i{position:absolute;width:4px;height:4px;background:#050505;border-radius:50%}
+.logo-ball i:nth-child(1){left:5px;top:5px}.logo-ball i:nth-child(2){left:15px;top:5px}.logo-ball i:nth-child(3){left:10px;top:11px}.logo-ball i:nth-child(4){left:4px;top:15px}.logo-ball i:nth-child(5){left:17px;top:15px}
+.logo-type{line-height:.84;font-weight:900;font-size:20px;letter-spacing:.05em}
+.logo-type small{display:block;font-size:10px;letter-spacing:.34em;margin-top:7px;margin-left:3px}
+.navlinks{display:flex;justify-content:center;gap:28px;font-size:13px}
+.navlinks a{color:#d8d9d7}.navlinks a:hover{color:var(--lime)}
+.actions{display:flex;gap:8px;align-items:center}
+.iconbtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:#0b0c0c;color:#fff;display:grid;place-items:center;font-size:18px}
+.cart-dot{position:relative}.cart-dot::after{content:attr(data-count);position:absolute;right:-3px;top:-4px;min-width:18px;height:18px;padding:0 4px;background:var(--lime);color:#050505;border-radius:9px;font-size:10px;font-weight:900;display:grid;place-items:center}
+.menu{display:none}
+.wrap{max-width:var(--max);margin:auto;padding:0 28px}
+.hero{min-height:650px;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
+radial-gradient(circle at 67% 58%,rgba(215,255,0,.09),transparent 22%),
+linear-gradient(110deg,#030303 0%,#090a09 48%,#0b1812 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:
+linear-gradient(120deg,transparent 0 62%,rgba(215,255,0,.06) 62% 63%,transparent 63%),
+repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 120px)}
+.hero-inner{min-height:650px;display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:10px;position:relative;z-index:2}
+.kicker{font-size:12px;letter-spacing:.34em;color:#c8cbc7;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:clamp(64px,8vw,128px);line-height:.78;margin:0 0 28px;letter-spacing:-.065em;text-transform:uppercase}
+.hero h1 .lime{color:var(--lime)}
+.hero p{max-width:560px;color:#b9bdb9;font-size:17px;line-height:1.6}
+.ctas{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn{border-radius:7px;padding:15px 22px;border:1px solid #4b4e4b;background:transparent;color:#fff;font-weight:800}
+.btn.primary{background:var(--lime);border-color:var(--lime);color:#050505}
+.btn:hover{transform:translateY(-1px)}
+.hero-art{height:560px;position:relative}
+.court{position:absolute;inset:72px 0 20px 7%;border:1px solid rgba(255,255,255,.12);transform:perspective(900px) rotateX(66deg);transform-origin:bottom;background:linear-gradient(180deg,#0c2a1d,#07110d)}
+.court::before,.court::after{content:"";position:absolute;background:rgba(255,255,255,.9)}
+.court::before{height:2px;left:0;right:0;top:50%}.court::after{width:2px;top:0;bottom:0;left:50%}
+.paddle{position:absolute;width:220px;height:300px;background:linear-gradient(140deg,#262928,#070807);border:2px solid #444;border-radius:34px 34px 70px 70px;left:42%;top:88px;transform:rotate(7deg);box-shadow:0 36px 80px rgba(0,0,0,.7)}
+.paddle::after{content:"";position:absolute;width:62px;height:155px;background:linear-gradient(90deg,#111,#2a2a2a,#111);left:79px;top:270px;border-radius:0 0 22px 22px}
+.paddle-logo{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:20px;font-weight:900;text-align:center}
+.paddle-logo span{display:block;color:var(--lime);font-size:32px}
+.ball{position:absolute;width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 32% 27%,#f0ff7a 0,#d7ff00 33%,#a8d500 72%,#6c9100 100%);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.ball:before{content:"";position:absolute;inset:0;border-radius:50%;background:
+radial-gradient(circle at 28% 22%,#111 0 4px,transparent 5px),
+radial-gradient(circle at 62% 21%,#111 0 4px,transparent 5px),
+radial-gradient(circle at 50% 46%,#111 0 5px,transparent 6px),
+radial-gradient(circle at 23% 59%,#111 0 4px,transparent 5px),
+radial-gradient(circle at 72% 62%,#111 0 4px,transparent 5px),
+radial-gradient(circle at 49% 80%,#111 0 4px,transparent 5px)}
+.ball.b1{left:19%;top:310px}.ball.b2{right:8%;top:385px;width:74px;height:74px}
+.cap{position:absolute;right:5%;top:170px;width:210px;height:125px;background:#080909;border:1px solid #303232;border-radius:120px 120px 35px 35px;transform:rotate(9deg);box-shadow:0 32px 60px #000}
+.cap:after{content:"U";position:absolute;color:#fff;font-size:36px;font-weight:900;left:86px;top:44px}
+.cap:before{content:"";position:absolute;width:130px;height:42px;background:#050505;border-radius:50%;right:-70px;bottom:-8px}
+.micro{display:flex;gap:28px;margin-top:36px;font-size:10px;letter-spacing:.15em;color:#b9bdb9;text-transform:uppercase}
+.micro span b{display:block;color:var(--lime);font-size:18px;margin-bottom:4px}
+.section{padding:54px 0;border-bottom:1px solid var(--line)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.section h2{margin:0;font-size:24px;text-transform:uppercase;letter-spacing:.14em}
+.section-sub{color:#8d928e;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat{height:230px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;position:relative;background:linear-gradient(145deg,#151716,#070807)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent 65%)}
+.cat .copy{position:absolute;left:20px;bottom:18px;z-index:2}
+.cat h3{font-size:22px;margin:0 0 6px}.cat small{color:#b8bbb8}
+.shape{position:absolute;inset:0;display:grid;place-items:center;opacity:.95}
+.shape .mini-paddle{width:82px;height:120px;border-radius:16px 16px 36px 36px;background:#0d0e0e;border:1px solid #454845;transform:rotate(16deg);position:relative}
+.shape .mini-paddle:after{content:"";position:absolute;width:22px;height:60px;background:#111;left:29px;top:108px;border-radius:0 0 9px 9px}
+.shape .tee{width:150px;height:120px;background:#0b0c0c;clip-path:polygon(24% 0,39% 13%,61% 13%,76% 0,100% 25%,82% 46%,82% 100%,18% 100%,18% 46%,0 25%);border:1px solid #444}
+.shape .balls{display:flex;gap:10px}.shape .balls .ball{position:static;width:66px;height:66px}
+.shape .bag{width:150px;height:110px;border-radius:14px;background:#0a0a0a;border:1px solid #444;position:relative}.shape .bag:before{content:"";position:absolute;width:78px;height:44px;border:4px solid #222;border-bottom:0;border-radius:40px 40px 0 0;left:33px;top:-36px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}.tab{padding:10px 14px;border:1px solid var(--line);background:#0c0d0d;color:#aeb1ae;border-radius:999px}.tab.active{background:var(--lime);color:#050505;border-color:var(--lime)}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.product{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#0a0b0b;transition:.2s}.product:hover{transform:translateY(-3px);border-color:#3d403e}
+.pvisual{height:260px;background:linear-gradient(155deg,#e8e8e5,#9d9f9b);position:relative;display:grid;place-items:center;color:#050505}
+.badge{position:absolute;left:12px;top:12px;background:var(--lime);color:#050505;padding:6px 8px;border-radius:4px;font-size:10px;font-weight:900;letter-spacing:.08em}
+.pvisual .mini-paddle{width:110px;height:160px;border-radius:22px 22px 46px 46px;background:#141515;border:1px solid #444;position:relative;box-shadow:0 18px 30px rgba(0,0,0,.2)}
+.pvisual .mini-paddle:after{content:"";position:absolute;width:28px;height:78px;background:#111;left:40px;top:146px;border-radius:0 0 10px 10px}
+.pvisual .mini-paddle span{position:absolute;inset:0;display:grid;place-items:center;color:var(--lime);font-weight:900;font-size:20px}
+.pbody{padding:16px}.vendor{color:#747975;font-size:10px;text-transform:uppercase;letter-spacing:.14em}.pname{font-weight:800;font-size:15px;line-height:1.35;margin:7px 0 12px;min-height:40px}.price{display:flex;justify-content:space-between;align-items:center}.price span{font-weight:900}.quick{width:34px;height:34px;border-radius:50%;background:transparent;border:1px solid #454845;color:#fff}.quick:hover{background:var(--lime);color:#050505;border-color:var(--lime)}
+.story{display:grid;grid-template-columns:1fr 1.15fr;min-height:420px;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#0b0c0c}
+.story-copy{padding:52px;display:flex;flex-direction:column;justify-content:center}.story-copy h2{font-size:52px;letter-spacing:-.04em;text-transform:none}.story-copy p{color:#9ea29e;line-height:1.6;max-width:500px}
+.story-art{background:
+linear-gradient(90deg,rgba(0,0,0,.2),rgba(0,0,0,.05)),
+radial-gradient(circle at 65% 38%,rgba(215,255,0,.35),transparent 8%),
+linear-gradient(145deg,#0e241a,#07100c);position:relative;overflow:hidden}
+.story-art:before{content:"";position:absolute;width:480px;height:480px;border:2px solid rgba(255,255,255,.25);border-radius:50%;right:-80px;top:40px}
+.story-art:after{content:"PLAY TOGETHER";position:absolute;right:42px;bottom:45px;color:#fff;font-weight:900;font-size:42px;letter-spacing:-.03em}
+.community{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.community-card{height:180px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(145deg,#101312,#06100c);padding:18px;display:flex;align-items:flex-end;font-weight:800}
+.footer{padding:48px 0 30px}.footer-grid{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:40px}.footer h4{font-size:12px;text-transform:uppercase;letter-spacing:.16em}.footer a{display:block;color:#858a86;margin:10px 0;font-size:13px}.footer a:hover{color:var(--lime)}.copyright{border-top:1px solid var(--line);margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;color:#616662;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.drawer{position:fixed;z-index:60;top:0;right:-430px;width:min(410px,92vw);height:100%;background:#0a0b0b;border-left:1px solid var(--line);transition:.25s;padding:24px;box-shadow:-30px 0 80px #000}.drawer.open{right:0}.drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.drawer h3{margin:0;text-transform:uppercase;letter-spacing:.1em}.close{background:none;border:0;color:#fff;font-size:26px}.cart-items{display:grid;gap:12px}.cart-item{border:1px solid var(--line);border-radius:12px;padding:12px}.cart-total{position:absolute;left:24px;right:24px;bottom:24px;border-top:1px solid var(--line);padding-top:18px}.searchbar{position:fixed;z-index:70;left:50%;top:-120px;transform:translateX(-50%);width:min(760px,92vw);background:#0d0e0e;border:1px solid var(--line);border-radius:16px;padding:14px;transition:.25s}.searchbar.open{top:90px}.searchbar input{width:100%;background:#050505;color:#fff;border:1px solid #303330;border-radius:10px;padding:15px 16px;outline:0}.mobile-panel{display:none}
+@media(max-width:1000px){
+ .navlinks{display:none}.menu{display:grid}.nav{grid-template-columns:1fr auto}.logo{min-width:0}.hero-inner{grid-template-columns:1fr}.hero{min-height:auto}.hero-inner{padding:70px 0}.hero-art{height:470px}.categories,.products{grid-template-columns:repeat(2,1fr)}.story{grid-template-columns:1fr}.story-art{min-height:320px}.community{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:repeat(2,1fr)}
+ .mobile-panel{position:fixed;display:block;z-index:55;top:110px;left:20px;right:20px;background:#0a0b0b;border:1px solid var(--line);border-radius:16px;padding:18px;transform:translateY(-150%);transition:.25s}.mobile-panel.open{transform:translateY(0)}.mobile-panel a{display:block;padding:14px;border-bottom:1px solid var(--line)}
+}
+@media(max-width:640px){
+ .announce{height:28px;font-size:9px}.nav{height:64px;padding:0 16px}.wrap{padding:0 16px}.logo-type{font-size:17px}.logo-mark{width:38px;height:38px}.actions .iconbtn:nth-child(2){display:none}
+ .hero-inner{padding:48px 0 24px}.hero h1{font-size:64px}.hero p{font-size:15px}.hero-art{height:390px}.paddle{width:160px;height:220px;left:38%;top:62px}.paddle::after{width:50px;height:120px;left:54px;top:204px}.cap{width:150px;height:90px;right:0;top:155px}.cap:after{left:61px;top:28px}.ball.b1{left:3%;top:250px;width:76px;height:76px}.ball.b2{right:2%;top:310px;width:58px;height:58px}.micro{gap:16px;overflow:auto;padding-bottom:10px}
+ .section{padding:38px 0}.section-head{align-items:flex-start;flex-direction:column}.categories{grid-template-columns:1fr 1fr}.cat{height:180px}.products{grid-template-columns:1fr 1fr;gap:10px}.pvisual{height:190px}.pname{font-size:13px}.pbody{padding:12px}.story-copy{padding:30px}.story-copy h2{font-size:40px}.community{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:22px}.copyright{flex-direction:column;gap:10px}
+}
+
+/* V3 additions — intentionally inherit the original V1 visual language */
+.store-tools{display:grid;grid-template-columns:1fr auto auto;gap:10px;margin:0 0 18px}
+.store-tools input,.store-tools select{background:#0c0d0d;color:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none}
+.store-tools input:focus,.store-tools select:focus{border-color:#555}
+.badge.pre{background:#fff;color:#050505}.badge.sold{background:#444;color:#ddd}.badge.coming{background:#0b2b20;color:var(--lime);border:1px solid rgba(215,255,0,.35)}
+.product{cursor:pointer}.quick{position:relative;z-index:4}
+.product-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:75;display:none}.product-modal-overlay.open{display:block}
+.product-modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-48%);width:min(920px,94vw);max-height:88vh;overflow:auto;background:#0a0b0b;border:1px solid var(--line);border-radius:20px;z-index:80;display:none;box-shadow:0 50px 120px #000}.product-modal.open{display:block}
+.product-modal-grid{display:grid;grid-template-columns:1fr 1fr}.product-modal-visual{min-height:500px;background:linear-gradient(155deg,#e8e8e5,#9d9f9b);display:grid;place-items:center}.product-modal-copy{padding:34px}.product-modal-copy h2{font-size:36px;margin:8px 0 14px;line-height:1.05}
+.modal-close{float:right;background:transparent;border:0;color:#fff;font-size:28px}.detail-row{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--line);font-size:12px;color:#9ea39f}.detail-row b{color:#fff;text-align:right}
+.checkout-screen{position:fixed;inset:0;z-index:90;background:#050505;display:none;overflow:auto}.checkout-screen.open{display:block}.checkout-wrap{max-width:1000px;margin:auto;padding:28px}.checkout-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-top:28px}.checkout-box{background:#0a0b0b;border:1px solid var(--line);border-radius:16px;padding:22px}.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:10px;color:#929792;letter-spacing:.12em;text-transform:uppercase}.field input,.field select{background:#050505;color:#fff;border:1px solid #303330;border-radius:9px;padding:13px}.preview-note{font-size:11px;color:#8b908b;line-height:1.6;border:1px solid #26322b;background:#0b1510;border-radius:10px;padding:12px}
+.checkout-line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}
+@media(max-width:800px){.store-tools{grid-template-columns:1fr 1fr}.store-tools input{grid-column:1/-1}.product-modal-grid,.checkout-grid{grid-template-columns:1fr}.product-modal-visual{min-height:300px}}
+
+
+/* =========================================================
+   U DINK STORE V4 — MOTION / INTERACTION LAYER
+   Added on top of the V3 master layout. No structural redesign.
+   ========================================================= */
+:root{--mx:50%;--my:50%}
+body{overflow-x:hidden}
+.scroll-progress{position:fixed;left:0;top:0;height:3px;width:0;background:var(--lime);z-index:120;transform-origin:left center;pointer-events:none}
+.motion-reveal{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.2,.75,.25,1),transform .75s cubic-bezier(.2,.75,.25,1)}
+.motion-reveal.is-visible{opacity:1;transform:none}
+.motion-reveal[data-delay="1"]{transition-delay:.08s}.motion-reveal[data-delay="2"]{transition-delay:.16s}.motion-reveal[data-delay="3"]{transition-delay:.24s}
+.announce{overflow:hidden;position:relative}.announce:after{content:"";position:absolute;inset:0 auto 0 -30%;width:22%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);animation:announceSweep 5s ease-in-out infinite}
+@keyframes announceSweep{0%,58%{left:-30%}78%,100%{left:120%}}
+.header{transition:transform .35s ease,background .35s ease}.header.is-scrolled{background:rgba(5,5,5,.96)}
+.logo-mark,.mark{transition:transform .35s cubic-bezier(.2,.8,.2,1)}.brand:hover .mark,.logo:hover .logo-mark{transform:rotate(-5deg) scale(1.04)}
+.hero h1 .lime{display:inline-block;position:relative}.hero h1 .lime:after{content:"";position:absolute;left:1%;right:2%;bottom:-.04em;height:.055em;background:var(--lime);transform:scaleX(0);transform-origin:left;animation:limeDraw .9s .85s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes limeDraw{to{transform:scaleX(1)}}
+.heroPaddle,.paddle{will-change:transform;transition:transform .22s ease-out}
+.pb,.ball,.cap{will-change:transform;transition:transform .28s ease-out}
+.court{will-change:transform;transition:filter .35s ease}
+.hero:hover .court{filter:brightness(1.09)}
+.motion-marquee{border-bottom:1px solid var(--line);overflow:hidden;background:#080909}
+.motion-marquee-track{display:flex;width:max-content;gap:42px;padding:14px 0;animation:marqueeMove 22s linear infinite;color:#858a86;font-size:10px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
+.motion-marquee-track b{color:var(--lime);font-size:9px}
+@keyframes marqueeMove{to{transform:translateX(-50%)}}
+.cat{transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s ease,background .3s ease}.cat:after{content:"";position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx) var(--my),rgba(216,255,0,.11),transparent 52%);opacity:0;transition:opacity .3s ease;pointer-events:none}.cat:hover:after{opacity:1}.cat:hover{transform:translateY(-4px)}
+.product{position:relative;transform-style:preserve-3d;will-change:transform;transition:transform .18s ease,border-color .25s ease}.product:before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(240px circle at var(--mx) var(--my),rgba(216,255,0,.11),transparent 55%);opacity:0;pointer-events:none;z-index:2;transition:opacity .2s ease}.product:hover:before{opacity:1}
+.product .pvisual,.product .visual{overflow:hidden}.product .pvisual:after,.product .visual:after{content:"";position:absolute;inset:-35%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.20) 49%,transparent 56%);transform:translateX(-70%) rotate(6deg);transition:transform .65s ease;pointer-events:none}.product:hover .pvisual:after,.product:hover .visual:after{transform:translateX(72%) rotate(6deg)}
+.btn,.quick,.round,.iconbtn,.chip,.tab{position:relative;overflow:hidden;transition:transform .18s ease,background .22s ease,border-color .22s ease,color .22s ease}
+.btn:active,.quick:active,.round:active,.iconbtn:active,.chip:active,.tab:active{transform:scale(.96)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:ripple .55s ease-out;pointer-events:none}
+@keyframes ripple{to{transform:scale(3.4);opacity:0}}
+.product-modal{opacity:0;transform:translate(-50%,-45%) scale(.985);transition:opacity .25s ease,transform .32s cubic-bezier(.2,.8,.2,1)}
+.product-modal.open{opacity:1;transform:translate(-50%,-48%) scale(1)}
+.product-modal-overlay{transition:opacity .25s ease}
+.drawer{will-change:transform}
+.back-top{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:1px solid #3b403c;background:rgba(8,9,9,.92);color:#fff;z-index:45;display:grid;place-items:center;opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:.25s ease;backdrop-filter:blur(8px)}
+.back-top.show{opacity:1;transform:none;pointer-events:auto}.back-top:hover{background:var(--lime);border-color:var(--lime);color:#050505}
+.ambient-orb{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(216,255,0,.12),transparent 68%);filter:blur(5px);pointer-events:none;opacity:.65;animation:orbFloat 7s ease-in-out infinite alternate}
+.ambient-orb.o1{right:18%;top:17%}.ambient-orb.o2{right:-4%;bottom:-6%;width:360px;height:360px;animation-delay:-3s}
+@keyframes orbFloat{to{transform:translate3d(22px,-20px,0) scale(1.08)}}
+@media (hover:hover) and (pointer:fine){
+  .magnetic{will-change:transform}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  .motion-reveal{opacity:1!important;transform:none!important}
+  .motion-marquee-track{transform:none!important}
+}
+
+</style>
+</head>
+<body><div class="scroll-progress" id="scrollProgress"></div>
+<div class="announce">Free shipping on selected drops · Bangkok delivery available</div>
+
+<header class="header">
+  <nav class="nav">
+    <a class="logo" href="#">
+      <div class="logo-mark"><div class="logo-ball"><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="logo-type">U DINK<small>STORE</small></div>
+    </a>
+    <div class="navlinks">
+      <a href="#shop">Shop</a><a href="#new">New Arrivals</a><a href="#paddles">Paddles</a>
+      <a href="#apparel">Apparel</a><a href="#accessories">Accessories</a><a href="#community">Community</a>
+    </div>
+    <div class="actions">
+      <button class="iconbtn" onclick="toggleSearch()" aria-label="Search">⌕</button>
+      <button class="iconbtn" aria-label="Account">◎</button>
+      <button class="iconbtn cart-dot" data-count="0" onclick="toggleCart()" aria-label="Cart">◫</button>
+      <button class="iconbtn menu" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+  <a href="#shop" onclick="toggleMenu()">Shop</a><a href="#new" onclick="toggleMenu()">New Arrivals</a>
+  <a href="#paddles" onclick="toggleMenu()">Paddles</a><a href="#apparel" onclick="toggleMenu()">Apparel</a>
+  <a href="#accessories" onclick="toggleMenu()">Accessories</a><a href="#community" onclick="toggleMenu()">Community</a>
+</div>
+
+<div class="searchbar" id="searchbar"><input id="searchInput" placeholder="Search paddles, gear, accessories..." oninput="searchProducts(this.value)" /></div>
+
+<section class="hero"><div class="ambient-orb o1"></div><div class="ambient-orb o2"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="kicker">Pickleball Lifestyle</div>
+      <h1>PLAY.<br>WEAR.<br><span class="lime">DINK.</span></h1>
+      <p>A minimal pickleball store built around the game, the gear and the community. Curated paddles, apparel and accessories for players who live on and off the court.</p>
+      <div class="ctas"><a class="btn primary" href="#new">Shop New Drop →</a><a class="btn" href="#shop">Explore Collection</a></div>
+      <div class="micro"><span><b>◇</b>Curated Gear</span><span><b>◎</b>Community First</span><span><b>↗</b>Bangkok Based</span></div>
+    </div>
+    <div class="hero-art">
+      <div class="court"></div>
+      <div class="paddle"><div class="paddle-logo"><span>U</span>U DINK<br><small>STORE</small></div></div>
+      <div class="ball b1"></div><div class="ball b2"></div><div class="cap"></div>
+    </div>
+  </div>
+</section>
+
+<div class="motion-marquee" aria-hidden="true">
+  <div class="motion-marquee-track">
+    <span>PLAY <b>●</b> WEAR <b>●</b> DINK <b>●</b> PADDLES <b>●</b> COMMUNITY <b>●</b> LIMITED DROPS <b>●</b></span>
+    <span>PLAY <b>●</b> WEAR <b>●</b> DINK <b>●</b> PADDLES <b>●</b> COMMUNITY <b>●</b> LIMITED DROPS <b>●</b></span>
+  </div>
+</div>
+
+<main>
+<section class="section" id="shop"><div class="wrap">
+  <div class="section-head"><h2>Shop by category</h2><div class="section-sub">Gear for every part of your game.</div></div>
+  <div class="categories">
+    <a class="cat" href="#paddles"><div class="shape"><div class="mini-paddle"></div></div><div class="copy"><h3>Paddles</h3><small>Shop now →</small></div></a>
+    <a class="cat" href="#apparel"><div class="shape"><div class="tee"></div></div><div class="copy"><h3>Apparel</h3><small>Shop now →</small></div></a>
+    <a class="cat" href="#accessories"><div class="shape"><div class="balls"><div class="ball"></div><div class="ball"></div></div></div><div class="copy"><h3>Accessories</h3><small>Shop now →</small></div></a>
+    <a class="cat" href="#bags"><div class="shape"><div class="bag"></div></div><div class="copy"><h3>Bags</h3><small>Shop now →</small></div></a>
+  </div>
+</div></section>
+
+<section class="section" id="new"><div class="wrap">
+  <div class="section-head"><h2>New arrivals</h2><div class="section-sub">Demo catalog — prices ready to plug in.</div></div>
+  <div class="tabs">
+    <button class="tab active" data-filter="all">All</button><button class="tab" data-filter="paddle">Paddles</button>
+    <button class="tab" data-filter="apparel">Apparel</button><button class="tab" data-filter="accessory">Accessories</button>
+  </div>
+  
+  <div class="store-tools">
+    <input id="catalogSearch" placeholder="Search product or brand..." oninput="renderCatalog()">
+    <select id="brandFilter" onchange="renderCatalog()"><option value="all">All brands</option></select>
+    <select id="statusFilter" onchange="renderCatalog()">
+      <option value="all">All status</option>
+      <option>NEW</option><option>LIMITED</option><option>PRE-ORDER</option><option>COMING SOON</option><option>SOLD OUT</option>
+    </select>
+  </div>
+
+  <div class="products" id="productGrid"></div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="story">
+    <div class="story-copy"><div class="kicker">Our Story</div><h2>Good Gear.<br>Better People.</h2><p>U DINK STORE is designed to work as more than a product catalog. The store connects equipment, lifestyle and the U DINK community into one simple shopping experience.</p><div class="ctas"><button class="btn primary">Our Story →</button></div></div>
+    <div class="story-art"></div>
+  </div>
+</div></section>
+
+<section class="section" id="community"><div class="wrap">
+  <div class="section-head"><h2>From our community</h2><div class="section-sub">Real players · real courts · real gear</div></div>
+  <div class="community">
+    <div class="community-card">Open Play<br>Weekly Sessions →</div>
+    <div class="community-card">Paddle Test<br>Try Before You Buy →</div>
+    <div class="community-card">U DINK I DRIVE<br>Performance →</div>
+    <div class="community-card">U DINK I DRINK<br>Social →</div>
+  </div>
+</div></section>
+</main>
+
+<footer class="footer"><div class="wrap">
+  <div class="footer-grid">
+    <div><div class="logo"><div class="logo-mark"><div class="logo-ball"><i></i><i></i><i></i><i></i><i></i></div></div><div class="logo-type">U DINK<small>STORE</small></div></div><p style="color:#7d827e;max-width:300px;line-height:1.6;font-size:13px">PLAY · WEAR · DINK.<br>Pickleball gear, lifestyle and community.</p></div>
+    <div><h4>Shop</h4><a href="#new">New Arrivals</a><a href="#paddles">Paddles</a><a href="#apparel">Apparel</a><a href="#accessories">Accessories</a></div>
+    <div><h4>About</h4><a href="#community">Community</a><a href="#">Our Story</a><a href="#">Events</a><a href="#">Contact</a></div>
+    <div><h4>Support</h4><a href="#">Shipping</a><a href="#">Returns</a><a href="#">FAQ</a><a href="#">LINE / Instagram</a></div>
+  </div>
+  <div class="copyright"><span>© 2026 U DINK STORE — Prototype</span><span>PLAY · WEAR · DINK.</span></div>
+</div></footer>
+
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head"><h3>Your Cart</h3><button class="close" onclick="toggleCart()">×</button></div>
+  <div class="cart-items" id="cartItems"><p style="color:#7f847f">Your cart is empty.</p></div>
+  <div class="cart-total"><div style="display:flex;justify-content:space-between;margin-bottom:14px"><b>Subtotal</b><b id="subtotal">฿0</b></div><button class="btn primary" style="width:100%" onclick="openCheckout()">Checkout</button></div>
+</aside>
+
+
+<div class="product-modal-overlay" id="productOverlay" onclick="closeProduct()"></div>
+<div class="product-modal" id="productModal">
+  <div class="product-modal-grid">
+    <div class="product-modal-visual"><div class="mini-paddle" style="transform:scale(1.6)"><span>U</span></div></div>
+    <div class="product-modal-copy">
+      <button class="modal-close" onclick="closeProduct()">×</button>
+      <div class="vendor" id="modalVendor"></div>
+      <h2 id="modalName"></h2>
+      <div class="badge" id="modalStatus" style="position:static;display:inline-block;margin:0 0 14px"></div>
+      <p id="modalSpec" style="color:#969b97;line-height:1.6"></p>
+      <div class="detail-row"><span>Availability</span><b id="modalAvailability"></b></div>
+      <div class="detail-row"><span>Delivery</span><b>Bangkok / Thailand</b></div>
+      <div class="detail-row"><span>Retail price</span><b>Price TBA</b></div>
+      <div class="ctas"><button class="btn primary" id="modalAdd">Add to Cart</button><button class="btn">Ask on LINE</button></div>
+    </div>
+  </div>
+</div>
+
+<section class="checkout-screen" id="checkoutScreen">
+  <div class="checkout-wrap">
+    <div class="drawer-head">
+      <div class="logo"><div class="logo-mark"><div class="logo-ball"><i></i><i></i><i></i><i></i><i></i></div></div><div class="logo-type">U DINK<small>CHECKOUT</small></div></div>
+      <button class="close" onclick="closeCheckout()">×</button>
+    </div>
+    <div class="checkout-grid">
+      <div class="checkout-box">
+        <h2>Contact & Delivery</h2>
+        <div class="field"><label>Name</label><input placeholder="Full name"></div>
+        <div class="field"><label>Phone</label><input placeholder="08X-XXX-XXXX"></div>
+        <div class="field"><label>Email</label><input placeholder="name@email.com"></div>
+        <div class="field"><label>Delivery</label><select><option>Bangkok delivery</option><option>Domestic shipping</option><option>Pickup — coming soon</option></select></div>
+        <div class="field"><label>Address</label><input placeholder="Delivery address"></div>
+        <div class="preview-note">Preview checkout only. No payment is collected yet. PromptPay / card payment can be connected after the retail prices and order workflow are finalized.</div>
+      </div>
+      <div class="checkout-box"><h2>Order Summary</h2><div id="checkoutItems"></div><div class="checkout-line"><b>Total</b><b>Price TBA</b></div><button class="btn primary" style="width:100%;margin-top:14px" onclick="previewOrder()">Submit Preview Order</button></div>
+    </div>
+  </div>
+</section>
+
+<script>
+const products = [{"id": "selkirk-omni", "name": "Selkirk OMNI 1776 / Canyon", "vendor": "Selkirk", "type": "paddle", "tag": "LIMITED", "spec": "Premium performance paddle · limited capsule"}, {"id": "joola-gen5", "name": "JOOLA Gen5 Perseus / Simon", "vendor": "JOOLA", "type": "paddle", "tag": "NEW", "spec": "High-performance power / control paddle"}, {"id": "loco", "name": "LOCO Hybrid / Elongated", "vendor": "Bread & Butter", "type": "paddle", "tag": "NEW", "spec": "Hybrid and elongated shape options"}, {"id": "coral-pro", "name": "Coral Pro", "vendor": "Six Zero", "type": "paddle", "tag": "NEW", "spec": "Premium all-court performance paddle"}, {"id": "rpm-v2", "name": "RPM V2 — Red / Pink", "vendor": "RPM", "type": "paddle", "tag": "NEW", "spec": "Available in red and pink"}, {"id": "rpm-q2", "name": "RPM Q2 Elongated", "vendor": "RPM", "type": "paddle", "tag": "PRE-ORDER", "spec": "Elongated profile · pre-order"}, {"id": "rpm-hybrid", "name": "RPM Hybrid", "vendor": "RPM", "type": "paddle", "tag": "NEW", "spec": "Balanced hybrid profile"}, {"id": "rpm-blackout", "name": "RPM Black Out", "vendor": "RPM", "type": "paddle", "tag": "NEW", "spec": "Blackout edition"}, {"id": "rpm-candy", "name": "RPM Q2 Candy Limited", "vendor": "RPM", "type": "paddle", "tag": "LIMITED", "spec": "Limited candy colorway"}, {"id": "boomstik", "name": "Selkirk Boomstik 1776", "vendor": "Selkirk", "type": "paddle", "tag": "LIMITED", "spec": "Power-focused limited capsule"}, {"id": "j2-j6", "name": "J2 / J6 — Blue + White", "vendor": "Honolulu", "type": "paddle", "tag": "PRE-ORDER", "spec": "Blue and white colorways"}, {"id": "luzz-inferno", "name": "Luzz Inferno — Blue / Pink", "vendor": "Luzz", "type": "paddle", "tag": "NEW", "spec": "Blue and pink colorways"}, {"id": "luzz-cannon", "name": "Luzz Cannon", "vendor": "Luzz", "type": "paddle", "tag": "SOLD OUT", "spec": "Entry performance paddle"}, {"id": "tee", "name": "U DINK Core Performance Tee", "vendor": "U DINK", "type": "apparel", "tag": "COMING SOON", "spec": "U DINK performance apparel"}, {"id": "cap", "name": "U DINK Icon Cap", "vendor": "U DINK", "type": "accessory", "tag": "COMING SOON", "spec": "Lifestyle cap"}, {"id": "bag", "name": "U DINK Lifestyle Court Bag", "vendor": "U DINK", "type": "accessory", "tag": "COMING SOON", "spec": "Court and lifestyle carry bag"}];
+let cart=[], activeTab="all", activeProduct=null;
+const brandFilter=document.getElementById("brandFilter");
+[...new Set(products.map(p=>p.vendor))].sort().forEach(v=>{
+  const o=document.createElement("option");o.value=v;o.textContent=v;brandFilter.appendChild(o);
+});
+function badgeClass(tag){return tag==="PRE-ORDER"?"pre":tag==="SOLD OUT"?"sold":tag==="COMING SOON"?"coming":""}
+function renderCatalog(){
+  const grid=document.getElementById("productGrid");
+  const q=(document.getElementById("catalogSearch")?.value||"").toLowerCase();
+  const brand=document.getElementById("brandFilter")?.value||"all";
+  const status=document.getElementById("statusFilter")?.value||"all";
+  const data=products.filter(p=>
+    (activeTab==="all"||p.type===activeTab) &&
+    (brand==="all"||p.vendor===brand) &&
+    (status==="all"||p.tag===status) &&
+    (`${p.vendor} ${p.name}`.toLowerCase().includes(q))
+  );
+  grid.innerHTML=data.map(p=>`
+    <article class="product" onclick="openProduct('${p.id}')">
+      <div class="pvisual"><div class="badge ${badgeClass(p.tag)}">${p.tag}</div><div class="mini-paddle"><span>U</span></div></div>
+      <div class="pbody">
+        <div class="vendor">${p.vendor}</div><div class="pname">${p.name}</div>
+        <div style="color:#7f847f;font-size:11px;min-height:30px;line-height:1.4">${p.spec}</div>
+        <div class="price"><span>Price TBA</span><button class="quick ${p.tag==="SOLD OUT"?"disabled":""}" onclick="event.stopPropagation();addCart('${p.id}')">+</button></div>
+      </div>
+    </article>`).join("") || '<p style="color:#7f847f">No products found.</p>';
+}
+renderCatalog();
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeTab=b.dataset.filter;renderCatalog();
+}));
+function toggleCart(){document.getElementById("cartDrawer").classList.toggle("open")}
+function addCart(id){
+  const p=products.find(x=>x.id===id);if(!p||p.tag==="SOLD OUT")return;
+  cart.push(p);document.querySelector(".cart-dot").dataset.count=cart.length;renderCart();
+  if(!document.getElementById("cartDrawer").classList.contains("open"))toggleCart();
+}
+function removeCart(i){cart.splice(i,1);document.querySelector(".cart-dot").dataset.count=cart.length;renderCart()}
+function renderCart(){
+  const el=document.getElementById("cartItems");
+  el.innerHTML=cart.length?cart.map((p,i)=>`<div class="cart-item"><b>${p.name}</b><div style="color:#7f847f;font-size:12px;margin-top:6px">${p.vendor} · ${p.tag}</div><button onclick="removeCart(${i})" style="margin-top:7px;background:none;border:0;color:#aaa;padding:0">Remove</button></div>`).join(""):'<p style="color:#7f847f">Your cart is empty.</p>';
+  document.getElementById("subtotal").textContent="Price TBA";
+  document.getElementById("checkoutItems").innerHTML=cart.length?cart.map(p=>`<div class="checkout-line"><span>${p.name}</span><b>TBA</b></div>`).join(""):'<p style="color:#7f847f">No items yet.</p>';
+}
+function openProduct(id){
+  activeProduct=products.find(x=>x.id===id);if(!activeProduct)return;
+  document.getElementById("modalVendor").textContent=activeProduct.vendor;
+  document.getElementById("modalName").textContent=activeProduct.name;
+  document.getElementById("modalSpec").textContent=activeProduct.spec;
+  document.getElementById("modalAvailability").textContent=activeProduct.tag;
+  const s=document.getElementById("modalStatus");s.textContent=activeProduct.tag;s.className=`badge ${badgeClass(activeProduct.tag)}`;
+  const add=document.getElementById("modalAdd");add.disabled=activeProduct.tag==="SOLD OUT";add.style.opacity=activeProduct.tag==="SOLD OUT"?.35:1;add.onclick=()=>addCart(activeProduct.id);
+  document.getElementById("productOverlay").classList.add("open");document.getElementById("productModal").classList.add("open");
+}
+function closeProduct(){document.getElementById("productOverlay").classList.remove("open");document.getElementById("productModal").classList.remove("open")}
+function openCheckout(){toggleCart();renderCart();document.getElementById("checkoutScreen").classList.add("open")}
+function closeCheckout(){document.getElementById("checkoutScreen").classList.remove("open")}
+function previewOrder(){alert("Preview only — payment is not connected yet.");}
+function toggleSearch(){document.getElementById("searchbar").classList.toggle("open");setTimeout(()=>document.getElementById("searchInput").focus(),100)}
+function searchProducts(v){document.getElementById("catalogSearch").value=v;activeTab="all";renderCatalog()}
+function toggleMenu(){document.getElementById("mobilePanel").classList.toggle("open")}
+renderCart();
+
+
+/* ===== Motion & interaction layer ===== */
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+function initReveal(){
+  const nodes = [
+    ...document.querySelectorAll('.section .secHead,.section .section-head,.story,.community,.footer-grid,.footgrid,.cat')
+  ];
+  nodes.forEach((el,i)=>{el.classList.add('motion-reveal');el.dataset.delay=String(i%4)});
+  if(reduceMotion){nodes.forEach(el=>el.classList.add('is-visible'));return}
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}})
+  },{threshold:.12,rootMargin:'0px 0px -40px'});
+  nodes.forEach(el=>io.observe(el));
+}
+function prepareProductMotion(){
+  document.querySelectorAll('.product').forEach(card=>{
+    if(card.dataset.motionReady)return;
+    card.dataset.motionReady='1';
+    card.classList.add('motion-reveal');
+    if(reduceMotion) card.classList.add('is-visible');
+    else {
+      requestAnimationFrame(()=>card.classList.add('is-visible'));
+    }
+    if(finePointer && !reduceMotion){
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+        card.style.setProperty('--mx',`${x*100}%`);
+        card.style.setProperty('--my',`${y*100}%`);
+        const rx=(.5-y)*4.5, ry=(x-.5)*5.5;
+        card.style.transform=`perspective(850px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-3px)`;
+      });
+      card.addEventListener('pointerleave',()=>{card.style.transform=''});
+    }
+  });
+}
+function initCategorySpotlight(){
+  if(!finePointer)return;
+  document.querySelectorAll('.cat').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',`${e.clientX-r.left}px`);
+      card.style.setProperty('--my',`${e.clientY-r.top}px`);
+    })
+  })
+}
+function initHeroParallax(){
+  if(!finePointer||reduceMotion)return;
+  const hero=document.querySelector('.hero');
+  const paddle=document.querySelector('.heroPaddle,.paddle');
+  const balls=[...document.querySelectorAll('.hero .pb,.hero .ball')];
+  const cap=document.querySelector('.hero .cap');
+  if(!hero||!paddle)return;
+  hero.addEventListener('pointermove',e=>{
+    const r=hero.getBoundingClientRect();
+    const nx=(e.clientX-r.left)/r.width-.5, ny=(e.clientY-r.top)/r.height-.5;
+    paddle.style.transform=`translate3d(${nx*18}px,${ny*12}px,0) rotate(${7+nx*2}deg)`;
+    balls.forEach((b,i)=>b.style.transform=`translate3d(${nx*(i? -16:25)}px,${ny*(i? -11:18)}px,0)`);
+    if(cap)cap.style.transform=`translate3d(${nx*-12}px,${ny*8}px,0) rotate(${9+nx}deg)`;
+  });
+  hero.addEventListener('pointerleave',()=>{
+    paddle.style.transform='';balls.forEach(b=>b.style.transform='');if(cap)cap.style.transform='';
+  });
+}
+function initMagnetic(){
+  if(!finePointer||reduceMotion)return;
+  document.querySelectorAll('.btn,.round,.iconbtn').forEach(el=>{
+    el.classList.add('magnetic');
+    el.addEventListener('pointermove',e=>{
+      const r=el.getBoundingClientRect();
+      const x=(e.clientX-r.left-r.width/2)*.10, y=(e.clientY-r.top-r.height/2)*.10;
+      el.style.transform=`translate(${x}px,${y}px)`;
+    });
+    el.addEventListener('pointerleave',()=>el.style.transform='');
+  });
+}
+function initRipple(){
+  document.addEventListener('pointerdown',e=>{
+    const btn=e.target.closest('.btn,.round,.iconbtn,.quick,.chip,.tab');
+    if(!btn)return;
+    const r=btn.getBoundingClientRect(), d=Math.max(r.width,r.height);
+    const s=document.createElement('span');s.className='ripple';
+    s.style.width=s.style.height=d+'px';
+    s.style.left=(e.clientX-r.left-d/2)+'px';s.style.top=(e.clientY-r.top-d/2)+'px';
+    btn.appendChild(s);setTimeout(()=>s.remove(),600);
+  },{passive:true});
+}
+function initScrollUI(){
+  const progress=document.getElementById('scrollProgress'), top=document.getElementById('backTop'), header=document.querySelector('.header');
+  const update=()=>{
+    const max=document.documentElement.scrollHeight-innerHeight;
+    const p=max>0?scrollY/max:0;
+    progress.style.width=(p*100)+'%';
+    top.classList.toggle('show',scrollY>650);
+    header?.classList.toggle('is-scrolled',scrollY>20);
+  };
+  addEventListener('scroll',update,{passive:true});update();
+  top.addEventListener('click',()=>scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'}));
+}
+
+/* Patch dynamic product rendering so newly-rendered cards get motion. */
+const _renderCatalog = typeof renderCatalog === 'function' ? renderCatalog : null;
+if(_renderCatalog){
+  renderCatalog = function(){ _renderCatalog(); requestAnimationFrame(prepareProductMotion); };
+}
+const _renderOld = typeof render === 'function' ? render : null;
+if(_renderOld){
+  render = function(...args){ const v=_renderOld(...args); requestAnimationFrame(prepareProductMotion); return v; };
+}
+
+initReveal();
+initCategorySpotlight();
+initHeroParallax();
+initMagnetic();
+initRipple();
+initScrollUI();
+prepareProductMotion();
+
+</script>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button></body></html>
