@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>U DINK STORE V5 Preview</title>
+<style>
+:root{--lime:#d8ff00;--bg:#050607;--panel:#0d0f11;--text:#f5f7f8;--muted:#9ba2a9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.top{height:32px;background:var(--lime);color:#050505;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;letter-spacing:.16em}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid #202326;position:sticky;top:0;background:rgba(5,6,7,.9);backdrop-filter:blur(12px);z-index:20}
+.brand{font-weight:900;font-size:22px;letter-spacing:.04em}
+.brand small{display:block;font-size:10px;letter-spacing:.34em;margin-top:5px}
+nav{display:flex;gap:26px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#d7dadd}
+.hero{position:relative;aspect-ratio:16/9;max-height:78vh;min-height:520px;overflow:hidden;background:#001728}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}
+.slide.active{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.01);animation:push 8s ease-in-out infinite alternate}
+@keyframes push{to{transform:scale(1.04)}}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.28))}
+.dots{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.45);border:0;padding:0}
+.dot.active{background:var(--lime)}
+.ar{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.3);color:#fff;border-radius:50%;font-size:24px}
+.prev{left:18px}.next{right:18px}
+.ticker{overflow:hidden;border-top:1px solid #1d2023;border-bottom:1px solid #1d2023;background:#080a0c}
+.track{white-space:nowrap;width:max-content;padding:14px 0;animation:mar 18s linear infinite;font-size:11px;letter-spacing:.2em;color:#d4d8dc}
+.track b{color:var(--lime)}@keyframes mar{to{transform:translateX(-50%)}}
+.wrap{max-width:1440px;margin:auto;padding:60px 28px}
+.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}
+h2{margin:0;font-size:28px;letter-spacing:.06em}
+.sub{color:var(--muted);font-size:12px;letter-spacing:.12em}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat,.product{background:var(--panel);border:1px solid #24272a;border-radius:18px;overflow:hidden}
+.cat{min-height:200px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(145deg,#15181a,#090b0d)}
+.cat h3{margin:0 0 8px;font-size:22px}.cat p{margin:0;color:var(--muted);line-height:1.45;font-size:13px}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pimg{height:250px;background:linear-gradient(160deg,#deded9,#8e918c);display:grid;place-items:center;color:#111;font-weight:900}
+.paddle{width:95px;height:145px;border-radius:24px 24px 46px 46px;background:#151616;border:2px solid #555;position:relative}
+.paddle:after{content:'';position:absolute;width:26px;height:72px;background:#171717;left:33px;top:132px;border-radius:0 0 10px 10px}
+.paddle span{position:absolute;inset:0;display:grid;place-items:center;color:var(--lime)}
+.pbody{padding:16px}.vendor{font-size:10px;color:#7f878d;letter-spacing:.13em}.name{font-weight:800;margin:7px 0 11px}
+.story{margin-top:60px;border:1px solid #23272a;border-radius:22px;padding:50px;background:linear-gradient(120deg,#0b0d0f,#092016);min-height:300px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.story h3{font-size:46px;margin:0 0 16px}.story p{color:var(--muted);line-height:1.6}
+.orb{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3ff81,var(--lime) 42%,#7f9800);margin:auto;box-shadow:0 0 80px rgba(216,255,0,.25)}
+footer{padding:30px;text-align:center;color:#6f777e;border-top:1px solid #202326;font-size:11px;letter-spacing:.14em}
+@media(max-width:900px){nav{display:none}.hero{min-height:56vw}.cats,.products{grid-template-columns:repeat(2,1fr)}.story{grid-template-columns:1fr}}
+@media(max-width:560px){header{height:62px;padding:0 16px}.hero{min-height:65vw}.wrap{padding:38px 16px}.cats,.products{grid-template-columns:1fr}.ar{display:none}}
+</style>
+</head>
+<body>
+<div class="top">PLAY · WEAR · DINK · U DINK STORE</div>
+<header><div class="brand">U DINK<small>STORE</small></div><nav><a>Shop</a><a>New Arrivals</a><a>Apparel</a><a>Paddles</a><a>Accessories</a><a>Community</a></nav><div>⌕ &nbsp; ◫</div></header>
+<section class="hero">
+<div class="slide active"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...TRUNCATED_FOR_TOOL_PLACEHOLDER..."><div class="shade"></div></div>
+<div class="slide"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...TRUNCATED_FOR_TOOL_PLACEHOLDER..."><div class="shade"></div></div>
+<div class="slide"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD...TRUNCATED_FOR_TOOL_PLACEHOLDER..."><div class="shade"></div></div>
+<button class="ar prev">‹</button><button class="ar next">›</button>
+<div class="dots"><button class="dot active"></button><button class="dot"></button><button class="dot"></button></div>
+</section>
+<div class="ticker"><div class="track">U DINK STORE <b>•</b> PLAY <b>•</b> WEAR <b>•</b> DINK <b>•</b> PICKLEBALL LIFESTYLE <b>•</b> COMMUNITY <b>•</b> U DINK STORE <b>•</b> PLAY <b>•</b> WEAR <b>•</b> DINK <b>•</b> PICKLEBALL LIFESTYLE <b>•</b> COMMUNITY <b>•</b></div></div>
+<div class="wrap">
+<div class="head"><h2>SHOP BY CATEGORY</h2><div class="sub">DARK / LIME SYSTEM + CAMPAIGN HERO</div></div>
+<div class="cats">
+<div class="cat"><h3>PADDLES</h3><p>Performance gear for every level and playing style.</p></div>
+<div class="cat"><h3>APPAREL</h3><p>Minimal sportswear for court and everyday wear.</p></div>
+<div class="cat"><h3>ACCESSORIES</h3><p>Bags, caps, balls and court essentials.</p></div>
+<div class="cat"><h3>COMMUNITY</h3><p>Events, people and the U DINK lifestyle.</p></div>
+</div>
+<div class="head" style="margin-top:58px"><h2>NEW ARRIVALS</h2><div class="sub">PRICES TBA</div></div>
+<div class="products"><div class="product"><div class="pimg"><div class="paddle"><span>U DINK</span></div></div><div class="pbody"><div class="vendor">SELKIRK</div><div class="name">OMNI 1776 / CANYON</div></div></div><div class="product"><div class="pimg"><div class="paddle"><span>U DINK</span></div></div><div class="pbody"><div class="vendor">JOOLA</div><div class="name">GEN5 PERSEUS / SIMON</div></div></div><div class="product"><div class="pimg"><div class="paddle"><span>U DINK</span></div></div><div class="pbody"><div class="vendor">BREAD & BUTTER</div><div class="name">LOCO HYBRID / ELONGATED</div></div></div><div class="product"><div class="pimg"><div class="paddle"><span>U DINK</span></div></div><div class="pbody"><div class="vendor">SIX ZERO</div><div class="name">CORAL PRO</div></div></div></div>
+<div class="story"><div><h3>GOOD GEAR.<br>BETTER PEOPLE.</h3><p>U DINK STORE combines pickleball gear, apparel and community under one visual language.</p></div><div class="orb"></div></div>
+</div>
+<footer>U DINK STORE · V5 WEB PREVIEW · PLAY · WEAR · DINK</footer>
+<script>
+const s=[...document.querySelectorAll('.slide')],d=[...document.querySelectorAll('.dot')];
+let i=0,t;
+function show(n){i=(n+s.length)%s.length;s.forEach((x,k)=>x.classList.toggle('active',k===i));d.forEach((x,k)=>x.classList.toggle('active',k===i));clearInterval(t);t=setInterval(()=>show(i+1),5000)}
+document.querySelector('.next').onclick=()=>show(i+1);document.querySelector('.prev').onclick=()=>show(i-1);d.forEach((x,k)=>x.onclick=()=>show(k));t=setInterval(()=>show(i+1),5000);
+</script>
+</body>
+</html>
